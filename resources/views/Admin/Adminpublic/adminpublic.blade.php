@@ -1,8 +1,5 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
-<!--[if IE 7]>    <html class="lt-ie9 lt-ie8" lang="en"> <![endif]-->
-<!--[if IE 8]>    <html class="lt-ie9" lang="en"> <![endif]-->
-<!--[if gt IE 8]><!-->
+
 <html lang="en">
  <!--<![endif]-->
  <head> 
@@ -28,7 +25,7 @@
   <link rel="stylesheet" type="text/css" href="/static/Admin/css/mws-theme.css" media="screen" /> 
   <link rel="stylesheet" type="text/css" href="/static/Admin/css/themer.css" media="screen" /> 
   <link rel="stylesheet" type="text/css" href="/static/Admin/css/my.css" media="screen" /> 
-  <title>后台首页</title> 
+  <title>@yield("title")</title> 
  </head> 
  <body> 
   <!-- Header --> 
@@ -95,7 +92,7 @@
       </div> 
       <ul> 
        <li><a href="#">Profile</a></li> 
-       <li><a href="#">Change Password</a></li> 
+       <li><a href="/adminuppwd">Change Password</a></li> 
        <li><a href="adminlogin">Logout</a></li> 
       </ul> 
      </div> 
@@ -144,21 +141,49 @@
        <ul class="closed"> 
         <li><a href="/admincates/create">分类添加</a></li> 
         <li><a href="/admincates">分类列表</a></li> 
-       </ul> </li> 
-      <li> <a href="#"><i class="icon-file"></i> 文章管理</a> 
-       <ul class="closed"> 
-        <li><a href="">文章添加</a></li> 
-        <li><a href="">文章列表</a></li> 
-       </ul> </li> 
+       </ul> </li>  
       <li> <a href="#"><i class="icon-file"></i> 商品管理</a> 
        <ul class="closed"> 
-        <li><a href="">商品添加</a></li> 
-        <li><a href="">商品列表</a></li> 
+        <li><a href="/admingoods/create">商品添加</a></li> 
+        <li><a href="/admingoods">商品列表</a></li> 
        </ul> </li> 
+       <li> <a href="#"><i class="icon-file"></i> 订单管理</a> 
+       <ul class="closed">  
+        <li><a href="/adminorderlist">订单列表</a></li> 
+       </ul> </li> 
+       <li> <a href="#"><i class="icon-file"></i> 门店管理</a> 
+       <ul class="closed"> 
+        <li><a href="/shops/create">门店添加</a></li> 
+        <li><a href="/shops">门店列表</a></li> 
+       </ul> </li>
+       <li> <a href="#"><i class="icon-file"></i> 快递管理</a> 
+       <ul class="closed"> 
+        <li><a href="/send/create">快递添加</a></li> 
+        <li><a href="/send">快递列表</a></li> 
+       </ul> </li>
+       <li> <a href="#"><i class="icon-file"></i> 支付方式管理</a> 
+       <ul class="closed"> 
+        <li><a href="/paytype/create">支付方式添加</a></li> 
+        <li><a href="/paytype">支付方式列表</a></li> 
+       </ul> </li>
+       <li> <a href="#"><i class="icon-file"></i> 轮播图管理</a> 
+       <ul class="closed"> 
+        <li><a href="/lbt/create">轮播图添加</a></li> 
+        <li><a href="/lbt">轮播图列表</a></li> 
+       </ul> </li> 
+       <li> <a href="#"><i class="icon-file"></i> 评价管理</a> 
+       <ul class="closed"> 
+        <li><a href="/pj">评价列表</a></li> 
+       </ul> </li>  
        <li> <a href="#"><i class="icon-file"></i> 公告管理</a> 
        <ul class="closed"> 
         <li><a href="/adminarticel/create">公告添加</a></li> 
         <li><a href="/adminarticel">公告列表</a></li> 
+       </ul> </li>  
+       <li> <a href="#"><i class="icon-file"></i> 友情链接</a> 
+       <ul class="closed"> 
+        <li><a href="/adminlink/create">链接添加</a></li> 
+        <li><a href="/adminlink">链接列表</a></li> 
        </ul> </li> 
      </ul> 
     </div> 

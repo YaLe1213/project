@@ -15,12 +15,7 @@
    <div class="mws-panel-inner-wrap">
     <div class="mws-panel-body no-padding"> 
      <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper" role="grid">
-      <form action="/adminarticel" method="get">
-        <div class="dataTables_filter" id="DataTables_Table_0_filter">
-         <label>搜索名字: <input type="text" aria-controls="DataTables_Table_0" id="input" name="keywords" /><input type="submit" value="搜索" class="btn"></label>
-          {{csrf_field()}}
-        </div>
-      </form>
+      
       <div id="did">
       <table class="mws-table mws-datatable dataTable" id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info"> 
        <thead> 
@@ -44,8 +39,8 @@
          <td class=" "><img src="{{$row['thumb']}}" alt=""></td> 
          <td class=" ">{!!$row['desc']!!}</td> 
          <td class=" "> 
-          <span class="btn-group"><a href="javascript:void(0)" class="btn btn-danger" value="{{$row['id']}}" id="del">　删除　</a>
-            <a href="/userinfo/{{$row['id']}}" class="btn btn-success">公告详情</a>
+          <span class="btn-group">
+            <a href="/adminarticel/{{$row['id']}}/edit" class="btn btn-success">公告修改</a>
           </span> 
          </td> 
         </tr>
@@ -85,7 +80,8 @@
         inputs[i].checked = !inputs[i].checked;
       }
     }
-    // 删除
+    
+    // ajax 多个删除
     function dele(){
       // 删除数据库里的数据
         // 获取id
@@ -98,26 +94,17 @@
       });
       // alert(arr);
       
-      $.get("/articeldel",{arr:arr},function(data){
-        alert(data);
-      });
-
-      // 删除tr
-      for(var i=inputs.length-1;i>=0;i--){
-        if(inputs[i].checked){
-          var p = inputs[i].parentNode.parentNode;
-          p.remove(p);
+      //触发Ajax请求
+      $.get("/articledel",{arr:arr},function(data){
+        if (data==1) {
+          // 遍历删除tr标签
+          for(var i=0;i<arr.length;i++){
+            $("input[value="+arr[i]+"]").parents("tr").remove();
+          }
         }
-      }
-      
+      });
     }
-    // 删除
-    // $("#del").click(function(){
-    //   id=$(this).val();
-    //   $.get("/articeldel",{id:id},function(data){
-    //     // alert(data);
-    //   });
-    // });
+
     
 
  </script>

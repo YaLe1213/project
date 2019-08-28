@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Users;
 use Hash;
+use DB;
 
 class UsersController extends Controller
 {
@@ -14,11 +15,12 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $k=$request->input("keywords");
         //加载用户列表
         // 获取全部用户信息
-        $data=Users::get();
+        $data=Users::where("name","like","%".$k."%")->get();
         return view("Admin.Users.index",['data'=>$data]);
     }
 
@@ -70,7 +72,8 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        //
+        $data=DB::table("address")->where("userid","=",$id)->get();
+        return view("Admin.Users.address",["data"=>$data]);
     }
 
     /**
@@ -105,5 +108,10 @@ class UsersController extends Controller
     public function destroy($id)
     {
         //用户删除
+        if (Users::where("id","=",$id)->delete()) {
+            return redirect("/adminuser")->with("success","删除用户成功");
+        }else{
+            return back()->with("error","删除用户失败");
+        }
     }
 }

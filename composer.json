@@ -11,6 +11,7 @@
         "php": "^7.1.3",
         "barryvdh/laravel-debugbar": "^3.2",
         "fideloper/proxy": "^4.0",
+        "graham-campbell/markdown": "^11.0",
         "gregwar/captcha": "1.*",
         "intervention/image": "^2.5",
         "johnlui/aliyun-oss": "~1.0",
@@ -44,6 +45,9 @@
             "database/seeds",
             "database/factories",
             "app/Library/Ucpaas.php"
+        ],
+        "files":[
+        "app/Library/helper.php"
         ]
     },
     "autoload-dev": {

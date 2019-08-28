@@ -175,6 +175,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        GrahamCampbell\Markdown\MarkdownServiceProvider::class,
 
     ],
 
@@ -227,8 +228,15 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Image' => Intervention\Image\Facades\Image::class,
-    ],
-    
-    'app_upload'=>'./upload/'.date("Y-m-d"),
+        'Markdown' => GrahamCampbell\Markdown\Facades\Markdown::class,
 
+    ],
+    // 公告上传的图片路径
+    'app_upload'=>'./upload/articel',
+    // 友情链接 icon 路径
+    'app_icon'=>'./upload/icon',
+    // 商品 图片显示
+    'app_shops'=>'./upload/shops',
+    // 轮播图路径
+    'app_lbt'=>'./upload/lbt',
 ];

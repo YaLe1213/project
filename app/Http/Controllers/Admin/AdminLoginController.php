@@ -57,6 +57,7 @@ class AdminLoginController extends Controller
             if(Hash::check($pwd,$info->pwd)){
                 // 把管理员账户放到 session 里
                 session(['adminname'=>$name]);
+                session(['adminid'=>$info->id]);
                 // 初始化管理员的权限
                 // 获取当前管理员的权限信息
                 // $list=DB::select("select n.name,n.mname,n.aname from user_role as ur,role_node as rn,node as n where ur.rid=rn.rid and rn.nid=n.id and uid={$info->id}");
@@ -64,6 +65,8 @@ class AdminLoginController extends Controller
                 
                 // 初始化管理员的权限
                 $nodelist['AdminController'][]='index';
+                $nodelist['AdminController'][]="adminuppwd";
+                $nodelist['AdminController'][]="adminpwdsave";
                 foreach($list as $key=>$value){
                     $nodelist[$value->mname][]=$value->aname;
                     // 如果有 create 方法 添加store
@@ -75,6 +78,7 @@ class AdminLoginController extends Controller
                         $nodelist[$value->mname][]="update";
                     }
                 }
+
                 // dd($nodelist);
                 // 把管理员的权限放到 session 里
                 session(['nodelist'=>$nodelist]);

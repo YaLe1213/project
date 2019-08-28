@@ -63,7 +63,7 @@
    </div><!--regList/-->
    <div class="regList">
     <label><span class="red">*</span> 验证码</label>
-    <input type="text" class="yanzheng" name="code" class="ll" reminder="请输入验证码"/><span style="color:#999;">请输入验证码</span><a href="javascript:void(0)" class="btn btn-success" onclick="send()">发送</a>
+    <input type="text" class="yanzheng" name="code" class="ll" reminder="请输入验证码"/><span style="color:#999;">请输入验证码</span><a href="javascript:void(0)" class="btn btn-success fasong">发送</a>
    </div><!--regList/-->
    <div class="regList">
     <label><span class="red">*</span> 请设置密码</label>
@@ -141,55 +141,56 @@
     // alert(2);
   });
 
-  // // 发送验证码按钮
-  // function send(){
-  //   t=$(this);
-  //   // 获取手机号
-  //   ph=$("input[name='phone'").val();
-  //   $.get("/registersendphone",{ph:ph},function(data){
-  //     if(data.code==000000){
-  //       m=10
-  //       // 按钮倒计时
-  //       mytime=setInterval(function(){
-  //         m--;
-  //         t.html(m);
-  //         t.attr("disabled",true);
-  //         if (m<1) {
-  //           // 清除定时器
-  //           clearInterval(mytime);
-  //           t.html("发送");
-  //           t.attr("disabled",false);
-  //         }
-  //       },1000);
-  //     }
-  //   },"json");
-  // }
+  // 发送验证码按钮
+  $(".fasong").click(function(){
+    t=$(this);
+    // 获取手机号
+    ph=$("input[name='phone']").val();
+    // alert(ph);
+    $.get("/registersendphone",{ph:ph},function(data){
+      if(data.code==000000){
+        m=10
+        // 按钮倒计时
+        mytime=setInterval(function(){
+          m--;
+          t.html(m);
+          t.attr("disabled",true);
+          if (m<1) {
+            // 清除定时器
+            clearInterval(mytime);
+            t.html("发送");
+            t.attr("disabled",false);
+          }
+        },1000);
+      }
+    },"json");
+  });
 
-  // // 短信验证码失去焦点事件
-  // $("input[name='code']").blur(function(){
-  //   oo=$(this);
-  //   // 获取写入的校验码
-  //   code=$(this).val();
-  //   $.get("/checkcode",{code:code},function(data){
-  //     if(data==1){
-  //       // 正确
-  //       // oo.next("span").css('color','#7bc144').html();
-  //        Code=true;
-  //     }else if(data==2){
-  //       // 有误
-  //       oo.next("span").css('color','red').html("验证码有误");
-  //        Code=false;
-  //     }else if(data==3){
-  //       // 为空
-  //       oo.next("span").css('color','red').html("验证码为空");
-  //        Code=false;
-  //     }else if(data==4){
-  //       // 过期
-  //       oo.next("span").css('color','red').html("验证码已过期");
-  //        Code=false;
-  //     }
-  //   });
-  // });
+  // 短信验证码失去焦点事件
+  $("input[name='code']").blur(function(){
+    oo=$(this);
+    // 获取写入的校验码
+    code=$(this).val();
+    $.get("/checkcode",{code:code},function(data){
+      if(data==1){
+        // 正确
+        // oo.next("span").css('color','#7bc144').html();
+         Code=true;
+      }else if(data==2){
+        // 有误
+        oo.next("span").css('color','red').html("验证码有误");
+         Code=false;
+      }else if(data==3){
+        // 为空
+        oo.next("span").css('color','red').html("验证码为空");
+         Code=false;
+      }else if(data==4){
+        // 过期
+        oo.next("span").css('color','red').html("验证码已过期");
+         Code=false;
+      }
+    });
+  });
 
   // 校验密码是否符合规则
   $("input[name='pwd']").blur(function(){

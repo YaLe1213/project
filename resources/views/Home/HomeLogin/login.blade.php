@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>17商城</title>
+<title>迪奥商城</title>
 <link type="text/css" href="/static/Home/css/css.css" rel="stylesheet" />
 <script type="text/javascript" src="/static/Home/js/jquery.js"></script>
 <!-- <script type="text/javascript" src="/static/Home/js/js.js"></script> -->
@@ -39,46 +39,4 @@
   <div class="clears"></div>
  </div><!--loginBox/-->
 </body>
-<script>
-  // $(".ll").focus(function(){
-  //   reminder=$(this).attr("reminder");
-  //   $(this).next("span").css("color","red").html(reminder);
-  // });
-  // // user 失去焦点事件
-  // $("input[name='user']").blur(function(){
-  //   user=$(this).val();
-  //   alert(user);
-  //   // o=$(this);
-  //   $.get("/checkloginuser",{user:user},function(data){
-  //     // alert(data);
-  //     if(data==1){
-  //       o.next("span").css("color","#7bc144").html("<h3><b>√</b></h3>");
-  //     }
-  //     if(data==2){
-  //       o.next("span").css("color","red").html("<h3><b>×</b></h3>");
-  //     }
-
-  //   });
-  // });
-  // pwd 失去焦点事件
-  // $("input[name='pwd']").blur(function(){
-  //   alert(1);
-  // });
-  // $("input[name='pwd']").blur(function(){
-  //   pwd=$(this).val();
-  //   // user=$("input[name='user']").val();
-  //   // alert(user);
-  //   oo=$(this);
-  //   $.get("/checkloginpwd",{pwd:pwd,user:user},function(data){
-  //     // alert(data);
-  //     if(data==3){
-  //       oo.next("span").css("color","#7bc144").html("<h3><b>√</b></h3>");
-  //     }
-  //     if(data==4){
-  //       oo.next("span").css("color","red").html("<h3><b>×</b></h3>");
-  //     }
-
-  //   });
-  // });
-</script>
 </html>

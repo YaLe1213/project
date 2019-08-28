@@ -13,7 +13,7 @@
    <div class="mws-panel-inner-wrap">
     <div class="mws-panel-body no-padding"> 
      <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper" role="grid">
-      <form action="/adminusers" method="get">
+      <form action="/adminuser" method="get">
         <div class="dataTables_filter" id="DataTables_Table_0_filter">
          <label>搜索名字: <input type="text" aria-controls="DataTables_Table_0" name="keywords" /><input type="submit" value="搜索" class="btn"></label>
         
@@ -51,7 +51,7 @@
               <button class="btn btn-warning"><i class="icon-trash">删除用户</i></button>
             </form>
             <!-- <a href="/adminuser/{{$row->id}}/edit" class="btn btn-success"><i class="icon-pencil">修改角色</i></a> -->
-            <!-- <a href="/userinfo/{{$row->id}}" class="btn btn-success">用户详情</a> -->
+            <a href="/adminuser/{{$row->id}}" class="btn btn-success">收货地址</a>
            
           </span> 
          </td> 

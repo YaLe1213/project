@@ -226,7 +226,8 @@ class RegisterController extends Controller
 
     // 发送短信 验证码
     public function registersendphone(Request $request){
-        $ph=$reuqest->input('ph');
+        $ph=$request->input('ph');
+        dd($ph);
         // 调用短信接口
         $data=sendsphone($ph);
         echo $data;

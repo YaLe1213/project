@@ -52,10 +52,20 @@ class HomeLoginController extends Controller
             return back()->with('error','账号或密码错误');
         }
             if(Hash::check($pwd,$info->pwd)){
+                session(["userid"=>$info->id,"username"=>$info->name]);
                 return redirect("/");
             }else{
                 return back()->with('error','账号或密码错误');
             }
+        
+    }
+    // 用户退出登录
+    public function logout(Request $request){
+        if($request->session()->pull("userid")){
+            return redirect("/homelogin/create");
+        }else{
+            return back();
+        }
         
     }
 
@@ -103,38 +113,6 @@ class HomeLoginController extends Controller
     {
         //
     }
-    // // 检测用户是否已注册
-    // public function checkuser(Request $request){
-    //     $user=$request->input('user');
-    //     // 获取邮箱列和手机号列
-    //     $email=Users::pluck("email")->toArray();
-    //     $phone=Users::pluck("phone")->toArray();
-    //     if(in_array($user,$email) || in_array($user, $phone)){
-    //         echo 1;
-    //     }else{
-    //         echo 2;
-    //     }
-    // }
-    // // 检测密码
-    // public function checkpwd(Request $request){
-    //     $user=$request->input('user');
-    //     $pwd=$request->input('pwd');
-    //     $email=Users::pluck("email")->toArray();
-    //     $phone=Users::pluck("phone")->toArray();
-    //     if(in_array($user,$email)){
-    //         $info=Users::where("email","=",$user)->first();
-    //     }
-    //     if(in_array($user, $phone)){
-    //         $info=Users::where("phone","=",$user)->first();
-    //     }else if($pwd==$info->pwd){
-    //         echo 3;
-    //     }else{
-    //         echo 4;
-    //     }
-        
-    // }
-
-
     //忘记密码
     public function forget(Request $request){
         return view("Home.HomeLogin.forget");

@@ -2,14 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>帝奥商城</title>
+<title>迪奥商城</title>
 <link type="text/css" href="/static/Home/css/css.css" rel="stylesheet" />
 <script type="text/javascript" src="/static/Home/js/jquery.js"></script>
 <script type="text/javascript" src="/static/Home/js/js.js"></script>
 <script src="/static/Home/js/wb.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
 $(function(){
-	$("#kinMaxShow").kinMaxShow();
+    $("#kinMaxShow").kinMaxShow();
 });
 </script>
 </head>
@@ -17,28 +17,33 @@ $(function(){
 <body>
  <div class="mianCont">
   <div class="top">
-   <span>您好！欢迎来到帝奥商城 请&nbsp;<a href="/homelogin/create">[登录]</a>&nbsp;<a href="/register/create">[注册]</a></span>
+    @if(session('userid'))
+      <span>您好！欢迎　{{session('username')}}　来到迪奥商城 &nbsp;<a href="/logout">[退出]</a></span>
+    @else
+     <span>您好！欢迎来到迪奥商城 请&nbsp;<a href="/homelogin/create">[登录]</a>&nbsp;<a href="/register/create">[注册]</a></span>
+    @endif
+   
    <span class="topRight">
-    <a href="vip.html">我的帝奥</a>&nbsp;| 
-    <a href="order.html">我的订单</a>&nbsp;| 
-    <a href="login.html">会员中心</a>&nbsp;|
-    <a href="contact.html">联系我们</a>
+    <a href="/">我的迪奥</a>&nbsp;| 
+    <a href="/orderlist">我的订单</a>&nbsp;| 
+    <a href="/myself">会员中心</a>&nbsp;|
+    <a href="javascript:void(0)">联系我们</a>
    </span>
   </div><!--top/-->
   <div class="lsg">
    <h1 class="logo"><a href="/"><img src="/static/Home/images/logo.png" width="217" height="90" /></a></h1>
-   <form action="#" method="get" class="subBox">
+   <form action="/homesearch" method="get" class="subBox">
     <div class="subBoxDiv">
-     <input type="text" class="subLeft" />
+     <input type="text" class="subLeft" name="keywords" />
      <input type="image" src="/static/Home/images/subimg.png" width="63" height="34" class="sub" />
      <div class="hotWord">
       热门搜索：
-      <a href="proinfo.html">冷饮杯</a>&nbsp;
-      <a href="proinfo.html">热饮杯</a> &nbsp;
-      <a href="proinfo.html">纸杯</a>&nbsp;
-      <a href="proinfo.html">纸巾</a>  &nbsp;
-      <a href="proinfo.html">纸巾</a> &nbsp;
-      <a href="proinfo.html">纸杯</a>&nbsp;
+      <a href="javascript:void(0)">冷饮杯</a>&nbsp;
+      <a href="javascript:void(0)">热饮杯</a> &nbsp;
+      <a href="javascript:void(0)">纸杯</a>&nbsp;
+      <a href="javascript:void(0)">纸巾</a>  &nbsp;
+      <a href="javascript:void(0)">纸巾</a> &nbsp;
+      <a href="javascript:void(0)">纸杯</a>&nbsp;
      </div><!--hotWord/-->
     </div><!--subBoxDiv/-->
    </form><!--subBox/-->
@@ -47,10 +52,11 @@ $(function(){
      <img src="/static/Home/images/gouimg.png" width="19" height="20" style="position:relative;top:6px;" />&nbsp;|&nbsp;
      <strong class="red">0</strong>&nbsp;件&nbsp;|
      <strong class="red">￥ 0.00</strong> 
-     <a href="order.html">去结算</a> <img src="/static/Home/images/youjian.jpg" width="5" height="8" />    
+     <a href="cart">去结算</a> <img src="/static/Home/images/youjian.jpg" width="5" height="8" />    
     </div><!--gouCar/-->
+    <!-- 个人中心 -->
     <div class="myChunlv">
-     <a href="vip.html"><img src="/static/Home/images/mychunlv.jpg" width="112" height="34" /></a>
+     <a href="/myself"><img src="/static/Home/images/mychunlv.jpg" width="112" height="34" /></a>
     </div><!--myChunlv/-->
    </div><!--gouwuche/-->
   </div><!--lsg/-->
@@ -60,12 +66,12 @@ $(function(){
     <!-- 无限分类开始 -->
     <ul class="InPorNav">
      @foreach($cates as $row)
-     <li><a href="product.html">{{$row->name}}</a>
+     <li><a href="/product/{{$row->id}}">{{$row->name}}</a>
       @if(count($row->suv))
       <div class="chilInPorNav">
       @foreach($row->suv as $rows)
         <ul class="InPorNav">
-         <li><a href="product.html">{{$rows->name}}</a>
+         <li><a href="/product/{{$rows->id}}">{{$rows->name}}</a>
           @if(count($rows->suv))
           <div class="chilInPorNav">
           @foreach($rows->suv as $rr)
@@ -85,8 +91,8 @@ $(function(){
    </div><!--pntLeft/-->
    <div class="pntRight">
     <ul class="nav">
-     <li class="navCur"><a href="index.html">商城首页</a></li>
-     <li><a href="product.html">促销中心</a></li>
+     <li class="navCur"><a href="">商城首页</a></li>
+     <li><a href="/product1">促销中心</a></li>
      <li><a href="login.html">会员中心</a></li>
      <li><a href="help.html">帮助中心</a></li>
      <div class="clears"></div>
@@ -94,21 +100,11 @@ $(function(){
     </ul><!--nav/-->
     <div class="banner">
      <div id="kinMaxShow">
+      @foreach($lbt as $row)
       <div>
-       <a href="#"><img src="/static/Home/images/ban1.jpg" height="360"  /></a>
-      </div> 		
-      <div>
-       <a href="#"><img src="/static/Home/images/ban2.jpg" height="360"  /></a>
+       <a href="#"><img src="{{$row->img}}" height="360"  /></a>
       </div>
-      <div>
-       <a href="#"><img src="/static/Home/images/ban3.jpg" height="360"  /></a>
-      </div>
-      <div>
-       <a href="#"><img src="/static/Home/images/ban4.jpg" height="360"  /></a>
-      </div>
-      <div>
-       <a href="#"><img src="/static/Home/images/ban5.jpg" height="360"  /></a>
-      </div>      
+      @endforeach   
      </div><!--kinMaxShow/-->
     </div><!--banner/-->
    </div><!--pntRight/-->
@@ -122,59 +118,24 @@ $(function(){
      <div class="clears"></div>
     </ul><!--rdList/-->
     <div class="rdProBox">
+    @foreach($tj as $row)
      <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro1.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
+      <dt><a href="/proinfo/{{$row->id}}"><img src="{{$row->img}}" width="132" height="129" /></a></dt>
+      <dd>{{$row->name}}</dd>
+      <dd class="cheng">￥{{$row->shopprice}}</dd>
      </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro2.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro3.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro4.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro5.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
+    @endforeach
      <div class="clears"></div>
     </div><!--rdPro/-->
     <div class="rdProBox">
+     @foreach($cx as $row)
      <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro4.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
+      <dt><a href="/proinfo/{{$row->id}}"><img src="{{$row->img}}" width="132" height="129" /></a></dt>
+      <dd>{{$row->name}}</dd>
+      <dd class="cheng">￥{{$row->shopprice}}</dd>
      </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro5.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro3.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro2.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro1.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
+     @endforeach
+     
      <div class="clears"></div>
     </div><!--rdPro/-->
    </div><!--rdLeft/-->
@@ -220,783 +181,108 @@ $(function(){
    <div class="rdRight">
     <p>公告</p>
     <ul><!-- 最多显示 5 个公告 -->
-      <li><a href="">优惠时间到了啊啊啊啊啊啊啊啊啊啊啊</a></li>
-      <li><a href="">优惠时间到了</a></li>
-      <li><a href="">优惠时间到了</a></li>
-      <li><a href="">优惠时间到了</a></li>
-      <li><a href="">优惠时间到了</a></li>
+      @foreach($articel as $row)
+      <li><a href="/gginfo/{{$row->id}}">{{$row->title}}</a></li>
+      @endforeach
       <li><a href="">更多公告 >></a></li>
     </ul>
 
    </div><!--rdRight/-->
    <div class="clears"></div>
   </div><!--rdPro/-->
+  @foreach($cates as $row)
   <div class="hengfu">
    <img src="/static/Home/images/hengfu1.jpg" width="979" height="97" />
   </div><!--hengfu/-->
   <div class="floor" id="floor1">
    <h3 class="floorTitle">
-   1F&nbsp;&nbsp;&nbsp;&nbsp;杯子系列
-   <a href="proinfo.html" class="more">更多 &gt;</a>
-   </h3>
-   <div class="floorBox">
-    <div class="floorLeft">
-     <ul class="flList">
-      <li>单层纸杯</li>
-      <li>双层纸杯</li>
-      <li>瓦楞纸杯</li>
-      <li>PET透明杯</li>
-      <li>冰淇淋杯</li>
-      <li><a href="proinfo.html">更多&gt;&gt;</a></li>
+   1F&nbsp;&nbsp;&nbsp;&nbsp;{{$row->name}}
+   
+    <div class="more" style="right: 80px;">
+       @foreach($row->suv as $er)
+      <a href="javascript:void(0)">{{$er->name}}</a>
+      @endforeach
+    </div>
+     <a href="/product/{{$row->id}}" class="more">更多 &gt;</a>
+     </h3>
+     <div class="floorBox">
+      <div class="floorLeft">
+       <ul class="flList">
+      @foreach($three as $k=>$v)
+        @if($row->id==$k)
+          @foreach($v as $kk=>$vs)
+            @foreach($vs as $two)
+              <li><a href="/product/{{$two->id}}">{{$two->name}}</a></li>
+            @endforeach
+          @endforeach
+        @endif
+      @endforeach
+        <li><a href="javascript:void(0)">更多&gt;&gt;</a></li>
+        <div class="clears"></div>
+       </ul><!--flList/-->
+       <div class="flImg"><img src="/static/Home/images/flListimg.jpg" width="198" height="290" /></div>
+      </div><!--floorLeft/-->
+    
+      <div class="floorRight">
+       <div class="">
+        @foreach($row->goods as $gg)
+        <dl style="float: left;margin-left: 10px;">
+          <dt><a href="/proinfo/{{$gg->id}}"><img src="{{$gg->img}}" width="132" height="129" /></a></dt>
+          <dd>{{$gg->name}}</dd>
+          <dd class="cheng">￥{{$gg->shopprice}}</dd>
+        </dl>
+        @endforeach
+        <div class="clears"></div>
+       </div><!--frProList-->
+      </div><!--floorRight/-->
       <div class="clears"></div>
-     </ul><!--flList/-->
-     <div class="flImg"><img src="/static/Home/images/flListimg.jpg" width="198" height="290" /></div>
-    </div><!--floorLeft/-->
-    <div class="floorRight">
-     <div class="frProList">
-      <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro4.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro5.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro3.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro2.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro2.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro3.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro4.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-       <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro5.jpg" width="132" height="129" /></a></dt>
-       <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-       <dd class="cheng">￥19.80/袋</dd>
-      </dl>
-      <div class="clears"></div>
-     </div><!--frProList-->
-     <div class="frProList">
-      <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro5.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro4.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro1.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro2.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro3.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro2.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro5.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-       <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro1.jpg" width="132" height="129" /></a></dt>
-       <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-       <dd class="cheng">￥19.80/袋</dd>
-      </dl>
-      <div class="clears"></div>
-     </div><!--frProList-->
-     <div class="frProList">
-      <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro1.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro2.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro3.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro4.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro5.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro4.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro1.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-       <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro2.jpg" width="132" height="129" /></a></dt>
-       <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-       <dd class="cheng">￥19.80/袋</dd>
-      </dl>
-      <div class="clears"></div>
-     </div><!--frProList-->
-     <div class="frProList">
-      <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro3.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro5.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro3.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro1.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro5.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro4.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro4.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-       <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro2.jpg" width="132" height="129" /></a></dt>
-       <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-       <dd class="cheng">￥19.80/袋</dd>
-      </dl>
-      <div class="clears"></div>
-     </div><!--frProList-->
-     <div class="frProList">
-      <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro4.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro1.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro2.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro2.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro2.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro5.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro4.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-       <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro5.jpg" width="132" height="129" /></a></dt>
-       <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-       <dd class="cheng">￥19.80/袋</dd>
-      </dl>
-      <div class="clears"></div>
-     </div><!--frProList-->
-    </div><!--floorRight/-->
-    <div class="clears"></div>
-   </div><!--floorBox/-->
+     </div><!--floorBox/-->
   </div><!--floor/-->
-  <div class="hengfu">
-   <img src="/static/Home/images/hengfu2.jpg" width="978" height="97" />
-  </div><!--hengfu/-->
-  <div class="floor" id="floor3">
-   <h3 class="floorTitle">
-   2F&nbsp;&nbsp;&nbsp;&nbsp;餐具系列
-   <a href="proinfo.html" class="more">更多 &gt;</a>
-   </h3>
-   <div class="floorBox">
-    <div class="floorLeft">
-     <ul class="flList">
-      <li>蛋糕</li>
-      <li>沙拉</li>
-      <li>西餐</li>
-      <li>中餐</li>
-      <li>外带打包</li>
-      <li><a href="proinfo.html">更多&gt;&gt;</a></li>
-      <div class="clears"></div>
-     </ul><!--flList/-->
-     <div class="flImg"><img src="/static/Home/images/flListimg.jpg" width="198" height="290" /></div>
-    </div><!--floorLeft/-->
-    <div class="floorRight">
-     <div class="frProList">
-      <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro3.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro5.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro3.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro2.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro2.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro3.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro4.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-       <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro5.jpg" width="132" height="129" /></a></dt>
-       <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-       <dd class="cheng">￥19.80/袋</dd>
-      </dl>
-      <div class="clears"></div>
-     </div><!--frProList-->
-     <div class="frProList">
-      <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro5.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro4.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro1.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro2.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro3.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro2.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro5.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-       <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro1.jpg" width="132" height="129" /></a></dt>
-       <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-       <dd class="cheng">￥19.80/袋</dd>
-      </dl>
-      <div class="clears"></div>
-     </div><!--frProList-->
-     <div class="frProList">
-      <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro1.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro2.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro3.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro4.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro5.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro4.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro1.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-       <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro2.jpg" width="132" height="129" /></a></dt>
-       <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-       <dd class="cheng">￥19.80/袋</dd>
-      </dl>
-      <div class="clears"></div>
-     </div><!--frProList-->
-     <div class="frProList">
-      <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro3.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro5.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro3.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro1.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro5.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro4.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro4.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-       <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro2.jpg" width="132" height="129" /></a></dt>
-       <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-       <dd class="cheng">￥19.80/袋</dd>
-      </dl>
-      <div class="clears"></div>
-     </div><!--frProList-->
-     <div class="frProList">
-      <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro4.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro1.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro2.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro2.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro2.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro5.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro4.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-       <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro5.jpg" width="132" height="129" /></a></dt>
-       <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-       <dd class="cheng">￥19.80/袋</dd>
-      </dl>
-      <div class="clears"></div>
-     </div><!--frProList-->
-    </div><!--floorRight/-->
-    <div class="clears"></div>
-   </div><!--floorBox/-->
-  </div><!--floor/-->
-  <div class="hengfu">
-   <img src="/static/Home/images/hengfu1.jpg" width="978" height="97" />
-  </div><!--hengfu/-->
-  <div class="floor" id="floor2">
-   <h3 class="floorTitle">
-   3F&nbsp;&nbsp;&nbsp;&nbsp;纸浆模塑系列
-   <a href="proinfo.html" class="more">更多 &gt;</a>
-   </h3>
-   <div class="floorBox">
-    <div class="floorLeft">
-     <ul class="flList">
-      <li>纸碟</li>
-      <li>纸袋</li>
-      <li>纸碗</li>
-      <li>食品袋</li>
-      <li>外带打包</li>
-      <li><a href="proinfo.html">更多&gt;&gt;</a></li>
-      <div class="clears"></div>
-     </ul><!--flList/-->
-     <div class="flImg"><img src="/static/Home/images/flListimg.jpg" width="198" height="290" /></div>
-    </div><!--floorLeft/-->
-    <div class="floorRight">
-     <div class="frProList">
-      <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro1.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro5.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro3.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro2.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro2.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro3.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro4.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-       <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro5.jpg" width="132" height="129" /></a></dt>
-       <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-       <dd class="cheng">￥19.80/袋</dd>
-      </dl>
-      <div class="clears"></div>
-     </div><!--frProList-->
-     <div class="frProList">
-      <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro5.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro4.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro1.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro2.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro3.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro2.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro5.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-       <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro1.jpg" width="132" height="129" /></a></dt>
-       <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-       <dd class="cheng">￥19.80/袋</dd>
-      </dl>
-      <div class="clears"></div>
-     </div><!--frProList-->
-     <div class="frProList">
-      <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro1.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro2.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro3.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro4.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro5.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro4.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro1.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-       <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro2.jpg" width="132" height="129" /></a></dt>
-       <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-       <dd class="cheng">￥19.80/袋</dd>
-      </dl>
-      <div class="clears"></div>
-     </div><!--frProList-->
-     <div class="frProList">
-      <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro3.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro5.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro3.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro1.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro5.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro4.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro4.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-       <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro2.jpg" width="132" height="129" /></a></dt>
-       <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-       <dd class="cheng">￥19.80/袋</dd>
-      </dl>
-      <div class="clears"></div>
-     </div><!--frProList-->
-     <div class="frProList">
-      <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro4.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro1.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro2.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro2.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro2.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro5.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-      <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro4.jpg" width="132" height="129" /></a></dt>
-      <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-      <dd class="cheng">￥19.80/袋</dd>
-     </dl>
-     <dl>
-       <dt><a href="proinfo.html"><img src="/static/Home/images/rdPro5.jpg" width="132" height="129" /></a></dt>
-       <dd>妙洁 一次性纸杯 8盎司228ml 100只/袋 20袋/箱</dd>
-       <dd class="cheng">￥19.80/袋</dd>
-      </dl>
-      <div class="clears"></div>
-     </div><!--frProList-->
-    </div><!--floorRight/-->
-    <div class="clears"></div>
-   </div><!--floorBox/-->
-  </div><!--floor/-->
+  @endforeach
+
   <div class="inHelp">
    <div class="inHLeft">
     <h4>帮助中心</h4>
     <ul class="inHeList">
-     <li><a href="help.html">购物指南</a></li>
-     <li><a href="help.html">支付方式</a></li>
-     <li><a href="help.html">售后服务</a></li>
-     <li><a href="about.html">企业简介</a></li>
+     <li><a href="javascript:void(0)">购物指南</a></li>
+     <li><a href="javascript:void(0)">支付方式</a></li>
+     <li><a href="javascript:void(0)">售后服务</a></li>
+     <li><a href="javascript:void(0)">企业简介</a></li>
      <div class="clears"></div>
     </ul><!--inHeList/-->
    </div><!--inHLeft/-->
    <div class="inHLeft">
     <h4>会员服务</h4>
     <ul class="inHeList">
-     <li><a href="reg.html">会员注册</a></li>
-     <li><a href="login.html">会员登录</a></li>
-     <li><a href="order.html">购物车</a></li>
-     <li><a href="order.html">我的订单</a></li>
+     <li><a href="/register">会员注册</a></li>
+     <li><a href="/homelogin/create">会员登录</a></li>
+     <li><a href="/cart">购物车</a></li>
+     <li><a href="/orderlist">我的订单</a></li>
      <div class="clears"></div>
     </ul><!--inHeList/-->
    </div><!--inHLeft/-->
    <div class="inHRight">
     <h4>友情链接</h4>
     <ul class="inHeList">
-     <li><a href="reg.html">京东</a></li>
-     <li><a href="login.html">淘宝</a></li>
-     <li><a href="order.html">唯品会</a></li>
-     <li><a href="order.html">更多链接</a></li>
+      @foreach($friendlink as $row)
+        <li><a href="{{$row->url}}">{{$row->name}}</a></li>
+      @endforeach
+     <li><a href="/morelink">更多链接</a></li>
      <div class="clears"></div>
     </ul><!--inHeList/-->
   </div><!--inHelp/-->
   <div class="footer">
    <p>
-   <a href="#">进入帝奥官网</a>&nbsp;|&nbsp;
-   <a href="index.html">商城首页</a>&nbsp;|&nbsp;
-   <a href="product.html">促销中心</a>&nbsp;|&nbsp;
-   <a href="order.html">我的订单</a>&nbsp;|&nbsp;
-   <a href="new.html">新闻动态</a>&nbsp;|&nbsp;
-   <a href="login.html">会员中心</a>&nbsp;|&nbsp;
-   <a href="help.htmll">帮助中心</a>
+   <a href="/">进入迪奥官网</a>&nbsp;|&nbsp;
+   <a href="/">商城首页</a>&nbsp;|&nbsp;
+   <a href="/product">促销中心</a>&nbsp;|&nbsp;
+   <a href="/orderlist">我的订单</a>&nbsp;|&nbsp;
+   <a href="">新闻动态</a>&nbsp;|&nbsp;
+   <a href="/myself">会员中心</a>&nbsp;|&nbsp;
+   <a href="javascript:void(0)">帮助中心</a>
    </p>
    <p>
-    版权所有：上海帝奥实业有限公司 版权所有  Copyright 2010-2015   沪ICP备00000000号   <a href="http://www.mycodes.net/" target="_blank">源码之家</a>   
+    版权所有：**** 版权所有  Copyright *****   沪ICP备00000000号  
    </p>
   </div><!--footer/-->
  </div><!--mianCont/-->

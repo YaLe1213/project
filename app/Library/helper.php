@@ -1,23 +1,24 @@
 <?php
+    //支付自定义函数
+    function pay(){
+        echo "这是支付操作";
+    }
+
+    //调用短信接口 发送短信
     function sendsphone($p){
         //初始化必填
         //填写在开发者控制台首页上的Account Sid
-        $options['accountsid']='baf281e9006ae0b0e3300773c5ca264d';
+        $options['accountsid']='ea54ef151a7baf8bce12fd9402ce0b56';
         //填写在开发者控制台首页上的Auth Token
-        $options['token']='d467caca8a3be9f4e676917783a42958';
+        $options['token']='bfe30282d8a7e0beaf32a4e6976ef8f7';
 
         //初始化 $options必填
         $ucpass = new Ucpaas($options);
-
-        //载入ucpass类
-        require_once('lib/Ucpaas.class.php');
-        require_once('serverSid.php');
-
-
-        $appid = "bc2c8d8d1c714194afd4b3450711bb69";    //应用的ID，可在开发者控制台内的短信产品下查看
-        $templateid = "494137";    //可在后台短信产品→选择接入的应用→短信模板-模板ID，查看该模板ID
-        $param = rand(1,100000); //验证码 //多个参数使用英文逗号隔开（如：param=“a,b,c”），如为参数则留空
-        $mobile = $p;//当前手机号
+        $appid = "584f95fcad224f25bbf78568db9c792b";    //应用的ID，可在开发者控制台内的短信产品下查看
+        $templateid = "483796";    //可在后台短信产品→选择接入的应用→短信模板-模板ID，查看该模板ID，必须通过审核
+        $param = rand(1,10000);//校验码 //多个参数使用英文逗号隔开（如：param=“a,b,c”），如为参数则留空
+        \Cookie::queue('pcode',$param,1);
+        $mobile =$p;//当前手机号
         $uid = "";
 
         //70字内（含70字）计一条，超过70字，按67字/条计费，超过长度短信平台将会自动分割为多条发送。分割后的多条短信将按照具体占用条数计费。
@@ -93,6 +94,4 @@
         echo $html_text;
 
     }
-
-
  ?>
