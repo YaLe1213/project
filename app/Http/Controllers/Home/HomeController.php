@@ -95,7 +95,16 @@ class HomeController extends Controller
         // dd($goods);
         return view("Home.Home.proinfo",['goods'=>$goods,"ping"=>$ping]);
     }
-
+    public function info($id)
+    {
+        //商品详情
+        $goods=Goods::where('id','=',$id)->first();
+            // 获取该商品的评论
+        $ping=DB::table("ping")->where("order_infoid","=",$id)->get();
+        // dd($ping);
+        // dd($goods);
+        return view("Home.Home.proinfo",['goods'=>$goods,"ping"=>$ping]);
+    }
     /**
      * Show the form for editing the specified resource.
      *

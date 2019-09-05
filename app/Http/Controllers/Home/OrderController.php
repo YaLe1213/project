@@ -136,7 +136,7 @@ class OrderController extends Controller
         // 获取当前用户的所有的订单
         // 当前用户id
         $id=session("userid");
-        $data=DB::table("order")->select(["order_info.id","order_info.price","order_info.img","order_info.status","order.updated_at","address.name as aname","paytype.name as pname"])->join("order_info","order.id","=","order_info.order_id")->join("address","order.address_id","=","address.id")->join("paytype","order.pay_id","=","paytype.id")->where("order.user_id","=",$id)->get();
+        $data=DB::table("order")->select(["order_info.id","order_info.goods_id as gid","order_info.price","order_info.img","order_info.status","order.updated_at","address.name as aname","paytype.name as pname"])->join("order_info","order.id","=","order_info.order_id")->join("address","order.address_id","=","address.id")->join("paytype","order.pay_id","=","paytype.id")->where("order.user_id","=",$id)->get();
 
         // dd($data);
         return view("Home.Order.orderlist",["data"=>$data]);
@@ -246,15 +246,19 @@ class OrderController extends Controller
     // 接收评价数据
     public function subping(Request $request){
         $data['con']=$request->input("con");
-        $data['order_infoid']=$request->input("pid");
         $data['created_at']=time();
         $data['usersid']=session("userid");
+        // dd($data);
+        $info=DB::table("order_info")->where("id","=",$request->input("pid"))->first();
+        $data['order_infoid']=$info->goods_id;
+        // dd($info);
         if(DB::table("ping")->insert($data)){
-            return redirect("/proinfo/{$data['order_infoid']}");
+            return redirect("/proinfo/{$info->goods_id}");
         }else{
             return back();
         }
     }
+    // 删除评价
     public function pingdel(){
         $id=$_GET['id'];
         if(DB::table("ping")->where("id","=",$id)->delete()){
